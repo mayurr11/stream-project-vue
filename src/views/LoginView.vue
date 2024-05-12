@@ -1,14 +1,9 @@
-<!-- Login page -->
-
-<template>
+<!-- <template>
   <div>
-    <!-- Header Component -->
     <HeaderComponent />
 
-    <!-- root container -->
     <div class="root">
 
-      <!-- Login-Form container -->
       <div class="login-container">
         <h1 class="login-title">Log in</h1>
         <form @submit.prevent="login" class="login-form">
@@ -116,6 +111,328 @@ export default {
 @media screen and (max-width: 820px) {
   .login-container {
     width: 100%;
+  }
+}
+</style> -->
+
+
+<template>
+  <div>
+    <HeaderComponent />
+
+    <div class="root">
+
+      <div class="login-container">
+        <div class="left-form">
+          <h1 class="login-title">Hello, <br /><span class="bold">Welcome!</span></h1>
+          <form @submit.prevent="login" class="login-form">
+            <input type="text" v-model="username" placeholder="Username" class="input-field" required>
+            <input type="password" v-model="password" placeholder="Password" class="input-field" required>
+            <button type="submit" class="login-button">Login</button>
+          </form>
+        </div>
+        <div class="img-background">
+        </div>
+      </div>
+
+    </div>
+
+    <div v-if="showPopup" class="popup">
+      <div class="popup-content">
+        <span class="close" @click="closePopup">&times;</span>
+        <p>{{ popupMessage }}</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+// Importing Header component and register it.
+import HeaderComponent from "../components/HeaderComponent.vue";
+// import auth from '../store/modules/auth';
+
+export default {
+  components: {
+    HeaderComponent
+  },
+
+  // Initialize data properties
+  data() {
+    return {
+      username: '',
+      password: '',
+      showPopup: false,
+      popupMessage: '',
+      loggedIn: true
+    };
+  },
+  methods: {
+    // Method to handle login
+    // login() {
+    //   if (this.username === 'Admin' && this.password === 'Admin@123') {
+    //     // Simulating successful login
+    //     // Show popup message
+    //     this.showPopup = true;
+    //     // this.loggedIn = true;
+    //     this.popupMessage = 'Login successful!';
+    //     // Reset username and password fields
+    //     this.username = '';
+    //     this.password = '';
+
+    //     auth.login();
+    //     this.$store.dispatch('login');
+
+    //     setTimeout(() => {
+    //       // Redirect to home view after successful login
+    //       this.$router.push({ name: 'home' });
+    //       this.showPopup = true;
+    //       this.popupMessage = 'Login successful! ✅';
+    //       // Reset username and password fields
+    //       this.username = '';
+    //       this.password = '';
+
+    //     }, 1000);
+    //   } else {
+    //     // Show popup for invalid credentials
+    //     setTimeout(() => {
+    //       this.showPopup = true;
+    //       this.popupMessage = 'Invalid username or password!!. Please try again. ';
+    //       // Reset password field
+    //       this.loggedIn = false;
+    //       this.username= '';  
+    //       this.password = ''; 
+    //     }, 1000);
+    //   }
+    // },
+
+    // login() {
+    //   // Create credentials object
+    //   const credentials = {
+    //     username: this.username,
+    //     password: this.password
+    //   };
+
+    //   // Call auth.login() with credentials object
+    //   const isLoggedIn = auth.login(credentials);
+
+    //   if (isLoggedIn) {
+    //     // Simulating successful login
+    //     // Show popup message
+    //     this.showPopup = true;
+    //     this.popupMessage = 'Login successful!';
+    //     // Reset username and password fields
+    //     this.username = '';
+    //     this.password = '';
+
+    //     setTimeout(() => {
+    //       // Redirect to home view after successful login
+    //       this.$router.push({ name: 'home' });
+    //       this.showPopup = true;
+    //       this.popupMessage = 'Login successful! ✅';
+    //       // Reset username and password fields
+    //       this.username = '';
+    //       this.password = '';
+    //     }, 1000);
+    //   } else {
+    //     // Show popup for invalid credentials
+    //     setTimeout(() => {
+    //       this.showPopup = true;
+    //       this.popupMessage = 'Invalid username or password!!. Please try again. ';
+    //       // Reset password field
+    //       this.loggedIn = false;
+    //       this.username = '';
+    //       this.password = '';
+    //     }, 1000);
+    //   }
+    // },
+
+    login() {
+    if (this.username && this.password) {
+      const credentials = { username: this.username, password: this.password };
+      this.$store.dispatch('login', credentials)
+        .then((loggedIn) => {
+          if (loggedIn) {
+            this.showPopup = true;
+            this.popupMessage = 'Login successful! ✅';
+            this.username = '';
+            this.password = '';
+            setTimeout(() => {
+              this.$router.push({ name: 'home' });
+            }, 1000);
+          } else {
+            this.showPopup = true;
+            this.popupMessage = 'Invalid username or password! ❌';
+            this.username = '';
+            this.password = '';
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    } else {
+      console.error('Username and password are required');
+    }
+  },
+
+    // Method to close popup
+    closePopup() {
+      this.showPopup = false;
+    }
+  }
+};
+</script>
+
+<style scoped>
+/* styles for LoginView.vue */
+
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+  /* padding: 20px; */
+  background-color: #f5f5f5;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.263);
+  width: 60%;
+  align-self: center;
+  overflow: hidden;
+  max-height: 450px;
+}
+
+.left-form {
+  width: 50%;
+  padding: 20px 60px;
+}
+
+.img-background {
+  height: 500px;
+  width: 50%;
+  /* background-color: #000; */
+  background: url('../assets/bg-2.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat;
+  color: #000;
+}
+
+
+.login-title {
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  font-weight: 400;
+  border-left: 7px solid #000042;
+  padding-left: 20px;
+}
+
+
+.login-title .bold {
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: slateblue;
+}
+
+.login-form {
+  width: 100%;
+  /* min-width: 650px; */
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field {
+  /* width: 100%; */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 0px solid #ccc;
+  font-size: 1.2rem;
+  background-color: #fff;
+  border-bottom: 1px solid #000;
+}
+
+.input-field:focus {
+  border-bottom: 2px solid #0056b3;
+  outline: none;
+}
+
+.login-button {
+  margin-top: 2rem;
+  width: 60%;
+  align-self: flex-start;
+  padding: 12px;
+  background-color: cornflowerblue;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+.back-link {
+  margin-top: 20px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* Popup styles */
+.popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #fff;
+  font-weight: 500;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  font-size: 1.4rem;
+}
+
+.close {
+  position: static;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  background-color: #d10000;
+  color: #fff;
+  padding: 0 9px;
+  border-radius: 90%;
+}
+
+@media screen and (max-width: 820px) {
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    align-self: center;
   }
 }
 </style>

@@ -3,38 +3,73 @@
 <template>
   <div>
     <!-- Header Component -->
-    <HeaderComponent />
+    <!-- <HeaderComponent /> -->
+    <HeaderComponent>
+      <!-- Enquiry Button Slot -->
+      <template #flightschedule>
+        <ButtonComponent destination="/subscription" class="flight-schedule-btn">Flight Schedule</ButtonComponent>
+      </template>
+
+      <template #enquiry>
+        <ButtonComponent destination="/enquiry" class="enquiry-btn">Enquiry</ButtonComponent>
+      </template>
+
+      <!-- Login Button Slot -->
+      <!-- <template #login>
+        <ButtonComponent destination="/login" class="login-btn">Login</ButtonComponent>
+      </template> -->
+      <template #login>
+        <ButtonComponent
+          v-if="!isLoggedIn"
+          destination="/login"
+          class="login-logout-btn"
+        >
+          Login
+        </ButtonComponent>
+
+        <ButtonComponent
+          v-else
+          class="login-logout-btn"
+          @click="logout"
+        >
+          Logout
+        </ButtonComponent>
+      </template>
+
+
+    </HeaderComponent>
 
     <!-- Main Content -->
     <div class="main-content">
+      
       <VideoComponent />
 
-      <div class="top-right-buttons">
+      <div class="right-section">
         <!-- Log in button -->
-        <ButtonComponent destination="/login" class="login-btn">Login</ButtonComponent>
+        <!-- <ButtonComponent destination="/login" class="login-btn">Login</ButtonComponent> -->
 
         <!-- Information box -->
-        <p class="box-content">
+        <div class="box-content">
 
           <!-- List of flight information -->
-        <ul>
-          <li> - Take off time: </li>
-          <li> - Docking time: </li>
-          <li> - Flight duration: </li>
-          <li> - Location: </li>
-        </ul>
-        </p>
+          <ul>
+            <li> - Flight Speed: </li>
+            <li> - Take off time: </li>
+            <li> - Docking time: </li>
+            <li> - Flight duration: </li>
+            <li> - Location: </li>
+          </ul>
+        </div>
 
         <!-- Enquiry Button -->
-        <ButtonComponent destination="/enquiry" class="enquiry-btn">Enquiry</ButtonComponent>
+        <!-- <ButtonComponent destination="/enquiry" class="enquiry-btn">Enquiry</ButtonComponent> -->
       </div>
       <br>
     </div>
 
     <!-- Bottom content section -->
-    <div class="bottom-content">
+    <!-- <div class="bottom-content">
       <div class="box-content">
-        <!-- List of upcoming flight information -->
         <ul>
           <li>
             <h4>Upcoming Flight Information: </h4>
@@ -45,16 +80,15 @@
           <li> - </li>
         </ul>
 
-        <!-- Subscribe buttons -->
         <div class="button-container">
           <ButtonComponent destination="/subscription" class="subscribe-btn">Subscribe</ButtonComponent>
           <ButtonComponent destination="/subscription" class="subscribe-btn">Subscribe</ButtonComponent>
         </div>
       </div>
 
-      <!-- Calender Component -->
+      Calender Component
       <CalendarComponent class="calender" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -64,7 +98,8 @@
 import HeaderComponent from "../components/HeaderComponent.vue";
 import VideoComponent from "../components/VideoComponent.vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
-import CalendarComponent from "../components/CalendarComponent.vue";
+// import LoginView from "./LoginView.vue"; // eslint-disable-next-line
+// import CalendarComponent from "../components/CalendarComponent.vue";
 
 export default {
   components: {
@@ -73,8 +108,35 @@ export default {
     HeaderComponent,
     VideoComponent,
     ButtonComponent,
-    CalendarComponent
-  }
+    // LoginView,
+    // CalendarComponent
+  },
+
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn; // Assuming isLoggedIn is stored in Vuex
+    },
+  },
+
+  // data() {
+  //   return {
+  //     // isLoggedIn: false,
+  //   };
+  // },
+   methods: {
+    // Method to logout
+    // logout() {
+    //   this.isLoggedIn = false;
+    //   // Redirect to login view
+    //   this.$router.push({ name: 'login' });
+    // },
+    logout() {
+      // Perform logout logic here
+      this.$store.dispatch('logout');
+      this.$router.push({ name: 'login' });
+      
+    },
+  },
 }
 </script>
 
@@ -83,22 +145,26 @@ export default {
 /* styles for HomeView.vue */
 .main-content {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  /* gap: 2rem; */
+  justify-content: space-between;
 }
 
-.top-right-buttons {
+.right-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 100%;
+  align-items: flex-start;
+  /* height: 70vh; */
+  margin-left: 2rem;
 }
 
 .box-content {
-  min-height: 360px;
-  min-width: 370px;
-  border: 1px solid black;
+  height: 100%;
+  min-width: 270px;
+  min-width: 300px;
+  /* border: 1px solid black; */
   text-align: left;
   border-radius: 10px;
   background-color: antiquewhite;
@@ -107,29 +173,42 @@ export default {
 
 .box-content ul {
   list-style: none;
-  padding: 0px 20px;
+  padding: 2px 20px;
 }
 
 .box-content ul li {
   padding-bottom: 4px;
 }
 
-.login-btn {
-  background-color: rgb(0, 0, 32);
+.login-logout-btn {
+  /* background-color: #483D8B; */
+  background-color: #9932CC;
   color: #fff;
 }
 
-.login-btn:hover {
-  box-shadow: 0 0 10px rgb(0, 0, 32);
+.login-logout-btn:hover {
+  box-shadow: 0 0 10px #483D8B;
 }
 
+
 .enquiry-btn {
-  background-color: rgb(240, 74, 74);
+  /* background-color: #DC143C; */
+  background-color: #4169E1;
   color: #fff;
 }
 
 .enquiry-btn:hover {
-  box-shadow: 0 0 10px rgb(240, 74, 74);
+  box-shadow: 0 0 10px #DC143C;
+}
+
+.flight-schedule-btn {
+  /* background-color: #3F51B5; */
+  background-color: #FF8C00;
+  color: #fff;
+}
+
+.flight-schedule-btn:hover {
+  box-shadow: 0 0 10px #3F51B5;
 }
 
 .subscribe-btn {

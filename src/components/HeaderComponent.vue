@@ -1,11 +1,24 @@
 <!-- Header component -->
    
 <template>
-    <header class="header">
+    <!-- <header class="header">
       
-      <!-- Display the title dynamically -->
       <h1>{{ title }}</h1>
       
+    </header> -->
+    <header class="header">
+      <h1>{{ title }}</h1>
+
+      <nav class="btn-container">
+        <!-- Slot for flight schedule Button -->
+        <slot name="flightschedule" class="btn"></slot>
+        
+        <!-- Slot for Enquiry Button -->
+        <slot name="enquiry" class="btn"></slot>
+
+        <!-- Slot for Login Button -->
+        <slot name="login" class="btn"></slot>
+      </nav>
     </header>
   </template>
   
@@ -31,6 +44,18 @@
     margin-bottom: 2rem;
     border-radius: 10px;
     box-shadow: 0 0 10px #111;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     }
+
+    .btn-container {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      /* height: 100%; */
+    }
+
   </style>
   

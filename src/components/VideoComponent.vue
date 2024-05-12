@@ -22,7 +22,7 @@
   /* styles for VideoComponent.vue  */
 
   .video-container {
-    width: 65%; 
+    width: 100%; 
     float: left;
     background: transparent;
   }
