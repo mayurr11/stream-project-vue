@@ -1,11 +1,6 @@
 <!-- Header component -->
    
 <template>
-    <!-- <header class="header">
-      
-      <h1>{{ title }}</h1>
-      
-    </header> -->
     <header class="header">
       <h1>{{ title }}</h1>
 
