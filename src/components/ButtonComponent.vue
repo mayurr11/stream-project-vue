@@ -41,17 +41,4 @@ export default {
 }
 </script>
 
-<style scoped>
-/* styles for ButtonComponent.vue  */
-
-.custom-button {
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-    margin: 0.2rem;
-}
-</style>
+<style scoped src="./button-component-styles.css"></style>

@@ -20,10 +20,7 @@ export default {
 }
 
 body {
-  /* background-image: url('./assets/DJI-Mavic-3-Classic-KV-3-2.jpg');
-  background-size: cover; 
-  background-repeat: no-repeat; */
-  font-family: "DM Sans", sans-serif; 
+  font-family: "DM Sans", sans-serif;
   background-color: #DCC7BE;
 }
 </style>
