@@ -22,7 +22,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
+// 
 // create Vue app instance and mount it to the root element in the HTML
 createApp(App)
 .use(router)
