@@ -88,12 +88,22 @@
             </div>
           </div>
         </div>
+
         <!-- Enquiry Success Popup -->
         <div v-if="enquirySuccess" class="popup">
           <div class="popup-content">
             <span class="close" @click="closeEnquirySuccess">&times;</span>
             <h2>Enquiry Sent!</h2>
             <p>Your enquiry has been successfully submitted.</p>
+          </div>
+        </div>
+
+        <!-- No Flight Available Popup -->
+        <div v-if="noFlightPopup" class="popup">
+          <div class="popup-content">
+            <span class="close" @click="closeNoFlightPopup">&times;</span>
+            <h2>No Flights Available</h2>
+            <p>There are no flights available on the selected date.</p>
           </div>
         </div>
       </template>
@@ -176,8 +186,9 @@ export default {
       isCalendarModalOpen: false,
       calendar: null,
       events: [
-        { title: 'Event 1', start: '2024-05-10' },
-        { title: 'Event 2', start: '2024-05-15' },
+        { title: 'Event 1', start: '2024-05-16' },
+        { title: 'Event 2', start: '2024-05-20' },
+        { title: 'Event 3', start: '2024-06-01' },
         // Add more events as needed
       ],
 
@@ -185,6 +196,7 @@ export default {
       isSubscriptionModalOpen: false,
       subscriptionSuccess: false,
       enquirySuccess: false,
+      noFlightPopup: false,
     };
   },
 
@@ -220,9 +232,7 @@ export default {
     },
 
     toggleDropdown() {
-      console.log("Dropdown button clicked");
       this.isDropdownOpen = !this.isDropdownOpen;
-      console.log("Dropdown state:", this.isDropdownOpen);
     },
 
     openFlightInfoModal() {
@@ -263,16 +273,7 @@ export default {
         selectable: true,
         select: this.handleDateSelect.bind(this, 'select'),
         dateClick: this.handleDateSelect.bind(this, 'dateClick'),
-        events: [
-          {
-            title: 'Event 1',
-            start: '2024-05-01'
-          },
-          {
-            title: 'Event 2',
-            start: '2024-05-05'
-          }
-        ]
+        events: this.events,
       });
       this.calendar.render();
     },
@@ -280,8 +281,21 @@ export default {
     handleDateSelect(eventType, selectInfo) {
       const selectedDate = new Date(selectInfo.date || selectInfo.startStr);
       const formattedDate = selectedDate.toLocaleDateString('en-GB');
-      console.log(`Selected date (${eventType}):`, formattedDate);
-      this.openSubscriptionModal(eventType, formattedDate);
+      // this.openSubscriptionModal(eventType, formattedDate);
+
+      const eventsOnDate = this.events.filter(event => {
+        const eventDate = new Date(event.start).toLocaleDateString('en-GB');
+        return eventDate === formattedDate;
+      });
+
+      if (eventsOnDate.length > 0) {
+        this.openSubscriptionModal(null, formattedDate);
+      } else {
+        this.noFlightPopup = true;
+        setTimeout(() => {
+          this.noFlightPopup = false;
+        }, 2000);
+      }
     },
 
 
