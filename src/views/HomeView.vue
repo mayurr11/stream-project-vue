@@ -46,7 +46,7 @@
                 <p v-else>Selected Date: {{ selectedDate }}</p>
               </div>
               <form @submit.prevent="submitSubscription" class="subscription-form">
-                <input type="email" v-model="email" placeholder="Enter your email" class="input-field" required>
+                <input type="email" v-model="emailID" placeholder="Enter your email" class="input-field" required>
                 <label for="notification-time" class="label">Select notification time before flight:</label>
                 <select id="notification-time" v-model="notificationTime" class="input-field">
                   <option value="1">1 hour</option>
@@ -60,15 +60,23 @@
           </div>
         </div>
 
+        <!-- Subscription Success Popup -->
+        <div v-if="subscriptionSuccess" class="popup">
+          <div class="popup-content">
+            <span class="close" @click="closeSubscriptionSuccess">&times;</span>
+            <h2>Subscription Successful!</h2>
+            <p>Thank you for subscribing.</p>
+          </div>
+        </div>
       </template>
 
       <template #enquiry>
         <div>
-          <button @click="openModal" class="enquiry-button">Enquiry</button>
+          <button @click="openEnquiryModal" class="enquiry-button">Enquiry</button>
           <!-- Modal -->
           <div v-if="isModalOpen" class="modal">
             <div class="modal-content">
-              <span class="close" @click="closeModal">&times;</span>
+              <span class="close" @click="closeEnquiryModal">&times;</span>
               <div class="enquiry-container">
                 <h1 class="enquiry-title">Enquiry</h1>
                 <form @submit.prevent="submitEnquiry" class="enquiry-form">
@@ -78,6 +86,14 @@
                 </form>
               </div>
             </div>
+          </div>
+        </div>
+        <!-- Enquiry Success Popup -->
+        <div v-if="enquirySuccess" class="popup">
+          <div class="popup-content">
+            <span class="close" @click="closeEnquirySuccess">&times;</span>
+            <h2>Enquiry Sent!</h2>
+            <p>Your enquiry has been successfully submitted.</p>
           </div>
         </div>
       </template>
@@ -143,6 +159,8 @@ export default {
     return {
       name: '',
       message: '',
+      emailID: '',
+      notificationTime: '',
       isModalOpen: false,
       isDropdownOpen: false,
 
@@ -165,7 +183,8 @@ export default {
 
 
       isSubscriptionModalOpen: false,
-      email: '',
+      subscriptionSuccess: false,
+      enquirySuccess: false,
     };
   },
 
@@ -180,14 +199,24 @@ export default {
       //Perform logout logic here
       this.$store.dispatch('logout');
     },
-    openModal() {
+    openEnquiryModal() {
       this.isModalOpen = true;
     },
-    closeModal() {
+    closeEnquiryModal() {
       this.isModalOpen = false;
     },
     submitEnquiry() {
-      this.closeModal();
+      this.closeEnquiryModal();
+      this.enquirySuccess = true;
+      this.name = '';
+      this.message = '';
+      setTimeout(() => {
+        this.enquirySuccess = false;
+      }, 2000);
+    },
+
+    closeEnquirySucces() {
+      this.enquirySuccess = false;
     },
 
     toggleDropdown() {
@@ -247,7 +276,7 @@ export default {
       });
       this.calendar.render();
     },
-    
+
     handleDateSelect(eventType, selectInfo) {
       const selectedDate = new Date(selectInfo.date || selectInfo.startStr);
       const formattedDate = selectedDate.toLocaleDateString('en-GB');
@@ -276,6 +305,17 @@ export default {
 
     submitSubscription() {
       this.closeSubscriptionModal();
+      this.subscriptionSuccess = true;
+      this.emailID = '';
+      this.notificationTime = '';
+      setTimeout(() => {
+        this.subscriptionSuccess = false;
+      }, 2000);
+    },
+
+    closeSubscriptionSuccess() {
+      // Close the subscription success popup
+      this.subscriptionSuccess = false;
     },
   },
 }

@@ -17,7 +17,7 @@
     </div>
     <div v-if="showPopup" class="popup">
       <div class="popup-content">
-        <!-- <span class="close" @click="closePopup">&times;</span> -->
+        <span class="close" @click="closePopup">&times;</span>
         <p>{{ popupMessage }}</p>
       </div>
     </div>
@@ -57,12 +57,16 @@ export default {
             this.password = '';
             setTimeout(() => {
               this.$router.push({ name: 'home' });
+              this.showPopup = false;
             }, 1000);
           } else {
             this.showPopup = true;
             this.popupMessage = 'Invalid username or password! ❌';
             this.username = '';
             this.password = '';
+            setTimeout(() => {
+              this.showPopup = false;
+            }, 1000);
           }
         })
         .catch(error => {
