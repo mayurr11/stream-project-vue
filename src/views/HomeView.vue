@@ -134,7 +134,6 @@ import interactionPlugin from '@fullcalendar/interaction';
 
 export default {
   components: {
-
     HeaderComponent,
     VideoComponent,
     ButtonComponent,
@@ -180,7 +179,6 @@ export default {
     logout() {
       //Perform logout logic here
       this.$store.dispatch('logout');
-      // this.$router.push({ name: 'login' });
     },
     openModal() {
       this.isModalOpen = true;
@@ -197,8 +195,6 @@ export default {
       this.isDropdownOpen = !this.isDropdownOpen;
       console.log("Dropdown state:", this.isDropdownOpen);
     },
-
-
 
     openFlightInfoModal() {
       this.isFlightInfoModalOpen = true;
@@ -251,6 +247,7 @@ export default {
       });
       this.calendar.render();
     },
+    
     handleDateSelect(eventType, selectInfo) {
       const selectedDate = new Date(selectInfo.date || selectInfo.startStr);
       const formattedDate = selectedDate.toLocaleDateString('en-GB');

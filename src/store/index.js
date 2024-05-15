@@ -1,35 +1,3 @@
-// // src/store/index.js
-
-// import { createStore } from 'vuex';
-
-// export default createStore({
-//   state: {
-//     isLoggedIn: false,
-//   },
-//   mutations: {
-//     login(state) {
-//       state.isLoggedIn = true;
-//     },
-//     logout(state) {
-//       state.isLoggedIn = false;
-//     },
-//   },
-//   actions: {
-//     login({ commit }) {
-//       // Perform authentication logic here
-//       commit('login');
-//     },
-//     logout({ commit }) {
-//       // Perform logout logic here
-//       commit('logout');
-//     },
-//   },
-//   getters: {
-//     isLoggedIn: (state) => state.isLoggedIn,
-//   },
-// });
-
-
 import { createStore } from "vuex";
 
 export default createStore({

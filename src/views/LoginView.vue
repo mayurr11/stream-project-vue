@@ -1,9 +1,7 @@
 <template>
   <div>
     <HeaderComponent />
-
     <div class="root">
-
       <div class="login-container">
         <div class="left-form">
           <h1 class="login-title">Admin<br /><span class="bold">Login</span></h1>
@@ -16,9 +14,7 @@
         <div class="img-background">
         </div>
       </div>
-
     </div>
-
     <div v-if="showPopup" class="popup">
       <div class="popup-content">
         <!-- <span class="close" @click="closePopup">&times;</span> -->

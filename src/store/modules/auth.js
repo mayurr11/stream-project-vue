@@ -1,23 +1,3 @@
-// export default {
-//     login(credentials) {
-//       // Perform authentication logic here
-//       if (credentials.username === 'Admin' && credentials.password === 'Admin@123') {
-//         // Simulate successful login for demonstration purposes
-//         localStorage.setItem('isLoggedIn', 'true');
-//         return true;
-//       } else {
-//         // Handle incorrect credentials
-//         console.error('Invalid username or password');
-//         return false;
-//       }
-//     },
-//     logout() {
-//       // Perform logout logic here
-//       localStorage.removeItem('isLoggedIn');
-//     },
-//   };
-  
-
 import { useRouter } from 'vue-router';
 
 export default {

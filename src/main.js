@@ -14,7 +14,6 @@ import store from './store';
 // routes for the application
 const routes = [
   { path: '/', name: 'home', component: HomeView },
-  // { path: '/login', component: LoginView },
   { path: '/login', name: 'login', component: LoginView }, 
 ];
 
