@@ -26,6 +26,7 @@
             </ul>
           </div>
         </div>
+        <!--  -->
         <!-- Modal for Calendar -->
         <div v-if="isCalendarModalOpen" class="modal">
           <div class="modal-content">
